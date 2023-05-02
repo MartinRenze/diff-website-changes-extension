@@ -16,13 +16,13 @@
     "128": "images/icon-128.png"
   },
   "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "options_ui": {
     "page": "options.html",
     "browser_style": true
   },
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "scripts": ["background.js"]
   },
   "action": {
     "default_title": "Diff Website Changes",

@@ -1,12 +1,13 @@
 // import htmldiff library
-import "./scripts/htmldiff.min.js";
+var script = document.createElement("script");
+script.src = "scripts/htmldiff.min.js";
+document.head.appendChild(script);
 
 if (typeof browser === "undefined") {
     var browser = browser || chrome;
 }
 
 function htmlDiff(oldHtml, newHtml) {
-    console.log("Check diff");
     let highlightedDiff = HtmlDiff.Diff.execute(oldHtml, newHtml);
     return highlightedDiff;
 }
@@ -14,7 +15,6 @@ function htmlDiff(oldHtml, newHtml) {
 browser.action.onClicked.addListener(function (tab) {
     var url = tab.url;
     browser.storage.local.get(url, async function (data) {
-        console.log("Clicked Check diff for url: " + url);
 
         var versions = data[url] || [];
         if (versions.length >= 2) {
@@ -40,7 +40,6 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
             if (changeInfo.status === "complete") {
                 if (domainsToMonitor !== undefined && tab.url !== undefined && domainsToMonitor.some(domain => tab.url.includes(domain))) {
                     // Filter the list of tabs to match the domains
-
                     var url = tab.url;
                     var result = await browser.scripting.executeScript(
                         {
@@ -50,12 +49,11 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
                             }
                         }
                     );
-
+                    
                     var htmlContent = result[0].result;
 
                     // Get the existing data for the URL, or initialize an empty array if it doesn't exist yet
                     browser.storage.local.get(url, function (data) {
-
                         var versions = data[url] || [];
 
                         if (versions.length === 0 || !doesAlmostMatch(versions[versions.length - 1], htmlContent)) {
