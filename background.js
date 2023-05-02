@@ -1,10 +1,8 @@
 // import htmldiff library
-var script = document.createElement("script");
-script.src = "scripts/htmldiff.min.js";
-document.head.appendChild(script);
+import "./scripts/htmldiff.min.js";
 
 if (typeof browser === "undefined") {
-    var browser = window.browser || window.chrome;
+    var browser = browser || chrome;
 }
 
 function htmlDiff(oldHtml, newHtml) {
@@ -40,7 +38,7 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
         let domainsToMonitor = result.domainsToMonitor;
         browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
             if (changeInfo.status === "complete") {
-                if (domainsToMonitor.some(domain => tab.url.includes(domain))) {
+                if (domainsToMonitor !== undefined && tab.url !== undefined && domainsToMonitor.some(domain => tab.url.includes(domain))) {
                     // Filter the list of tabs to match the domains
 
                     var url = tab.url;

@@ -1,3 +1,7 @@
+if (typeof browser === "undefined") {
+    var browser = browser || chrome;
+}
+
 function saveOptions(e) {
 
     let domainsToMonitor = document.querySelector("#domainsToMonitor").value.split('\n').filter(domain => domain.trim() !== '');
@@ -11,7 +15,9 @@ function restoreOptions() {
 
     let gettingItem = browser.storage.sync.get('domainsToMonitor');
     gettingItem.then((res) => {
-        document.querySelector("#domainsToMonitor").value = res.domainsToMonitor.join('\n') || '';
+        if(res.domainsToMonitor !== undefined) {
+            document.querySelector("#domainsToMonitor").value = res.domainsToMonitor.join('\n') || '';
+        }
     });
 }
 

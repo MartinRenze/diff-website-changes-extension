@@ -21,7 +21,8 @@
     "browser_style": true
   },
   "background": {
-    "service_worker": ["background.js", "scripts/htmldiff.min.js"]
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
