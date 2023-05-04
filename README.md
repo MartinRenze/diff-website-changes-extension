@@ -5,3 +5,5 @@
 
 * The extension only validates changes in the document body
 * It detects differences, delete, add and change and highlights them. Either crossing out or underlining
+
+* Diff script based on https://github.com/alitas/htmldiff-js
