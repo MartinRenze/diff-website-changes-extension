@@ -38,16 +38,29 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
         let domainsToMonitor = result.domainsToMonitor;
         browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
             if (changeInfo.status === "complete") {
-                if (domainsToMonitor !== undefined && tab.url !== undefined && domainsToMonitor.some(domain => tab.url.includes(domain))) {
-                    // Filter the list of tabs to match the domains
 
+                if (domainsToMonitor !== undefined && tab.url !== undefined && domainsToMonitor.some(domain => tab.url.includes(domain))) {
+                    
+                    var elementToCheckResult = await browser.storage.sync.get('elementToCheck');
+                    var elementToCheck = elementToCheckResult.elementToCheck
+
+                    console.log("elemttoCheck3: " + elementToCheck);
+                    // Filter the list of tabs to match the domains
                     var url = tab.url;
                     var result = await browser.scripting.executeScript(
                         {
                             target: { tabId: tabId },
-                            func: () => {
-                                return document.body.outerHTML;
-                            }
+                            func: (elementToCheck) => {
+                                if(elementToCheck == undefined || elementToCheck == "") {
+                                    console.log("elemttoCheck: " + elementToCheck);
+                                    return document.body.outerHTML;
+                                }
+                                else {
+                                    console.log("elemttoCheck else: " + elementToCheck);
+                                    return document.getElementById(elementToCheck).outerHTML;
+                                }
+                            },
+                            args : [ elementToCheck ],
                         }
                     );
 
