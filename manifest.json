@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Diff Website Changes",
   "description": "Enable diff view for Websites. The old, cached version is compared to the new version of a website. Differences are highlighted.",
-  "version": "1.0",
+  "version": "1.0.1",
   "browser_specific_settings": {
     "gecko": {
       "id": "diff-website-change-extension@martin-renze.de",

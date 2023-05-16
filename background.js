@@ -6,7 +6,6 @@ if (typeof browser === "undefined") {
 }
 
 function htmlDiff(oldHtml, newHtml) {
-    console.log("Check diff");
     let highlightedDiff = HtmlDiff.Diff.execute(oldHtml, newHtml);
     return highlightedDiff;
 }
@@ -44,7 +43,6 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
                     var elementToCheckResult = await browser.storage.sync.get('elementToCheck');
                     var elementToCheck = elementToCheckResult.elementToCheck
 
-                    console.log("elemttoCheck3: " + elementToCheck);
                     // Filter the list of tabs to match the domains
                     var url = tab.url;
                     var result = await browser.scripting.executeScript(
@@ -52,11 +50,9 @@ browser.storage.sync.get('domainsToMonitor').then(function (result) {
                             target: { tabId: tabId },
                             func: (elementToCheck) => {
                                 if(elementToCheck == undefined || elementToCheck == "") {
-                                    console.log("elemttoCheck: " + elementToCheck);
                                     return document.body.outerHTML;
                                 }
                                 else {
-                                    console.log("elemttoCheck else: " + elementToCheck);
                                     return document.getElementById(elementToCheck).outerHTML;
                                 }
                             },
